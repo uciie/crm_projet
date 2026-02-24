@@ -7,13 +7,12 @@ import {
 } from '@nestjs/common'
 import { AuthGuard }  from '@nestjs/passport'
 import { Reflector }  from '@nestjs/core'
-import { Profile } from '../../../frontend/src/types/index';
+import { AuthUser } from './types';
 
 // Décorateur pour marquer une route comme publique (pas besoin de JWT)
 // Usage : @Public() sur un controller ou une méthode
 export const IS_PUBLIC_KEY = 'isPublic'
 export const Public = () => Reflect.metadata(IS_PUBLIC_KEY, true)
-export type AuthUser = Profile;
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {

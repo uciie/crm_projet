@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common'
 import { db } from '../database/neon.config'
 import { communications, profiles, contacts, leads } from '../database/schema'
 import { eq, and, or, desc, sql } from 'drizzle-orm'
@@ -91,7 +91,8 @@ export class CommunicationsService {
       .from(communications)
       .where(eq(communications.id, id))
       .limit(1)
-
+    if (comm.created_by !== userId && role !== 'admin') 
+      throw new ForbiddenException('Accès refusé : vous n\'êtes pas le créateur de cette communication ou administrateur.')
     if (!comm) throw new NotFoundException('Communication introuvable')
 
     await db.delete(communications).where(eq(communications.id, id))

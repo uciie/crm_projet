@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler'
 import { ConfigModule }      from '@nestjs/config'
 import { AuthModule }        from './auth/auth.module'
 import { ContactsModule }    from './contacts/contacts.module'
@@ -21,6 +22,7 @@ import { CommunicationsModule } from './communications/communications.module'
     CommunicationsModule,
     //EmailModule,
     //DashboardModule,
+    ThrottlerModule.forRoot([{ ttl: 60000, limit: 20 }])
   ],
 })
 export class AppModule {}

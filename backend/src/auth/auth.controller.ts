@@ -14,7 +14,7 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common'
-
+import { IsEmail, IsString, IsEnum, MaxLength } from 'class-validator'
 import { AuthService, UpdateProfileDto, UpdateUserRoleDto } from './auth.service'
 import { JwtAuthGuard, Public }   from './jwt-auth.guard'
 import { RolesGuard, Roles }      from './roles.guard'
@@ -22,9 +22,15 @@ import { AuthUser }               from './jwt.strategy'
 
 // DTO pour l'invitation
 class InviteUserDto {
-  email:     string
+  @IsEmail()
+  email: string
+
+  @IsString()
+  @MaxLength(255)
   full_name: string
-  role:      'commercial' | 'utilisateur'
+
+  @IsEnum(['commercial', 'utilisateur'])
+  role: 'commercial' | 'utilisateur'
 }
 
 // DTO pour le changement de statut actif
