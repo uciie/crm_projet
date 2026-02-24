@@ -17,8 +17,6 @@ import {
 }                        from '@/lib/auth.schemas'
 import { authService }   from '@/lib/auth.service'
 
-// ── Page ─────────────────────────────────────────────────────
-
 export default function UpdatePasswordPage() {
   const router                        = useRouter()
   const [serverError, setServerError] = useState<string | null>(null)
@@ -47,16 +45,15 @@ export default function UpdatePasswordPage() {
   return (
     <AuthLayout
       title="Nouveau mot de passe"
-      subtitle="Choisissez un mot de passe securise pour votre compte."
+      subtitle="Choisissez un mot de passe sécurisé pour votre compte."
     >
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
-
         {serverError && <AuthAlert type="error" message={serverError} />}
 
         <div className="space-y-3">
           <PasswordInput
             label="Nouveau mot de passe"
-            placeholder="8 caracteres minimum"
+            placeholder="8 caractères minimum"
             autoComplete="new-password"
             autoFocus
             {...register('password')}
@@ -67,7 +64,7 @@ export default function UpdatePasswordPage() {
 
         <PasswordInput
           label="Confirmer le mot de passe"
-          placeholder="Repetez le mot de passe"
+          placeholder="Répétez le mot de passe"
           autoComplete="new-password"
           {...register('confirmPassword')}
           error={errors.confirmPassword?.message}
@@ -78,7 +75,6 @@ export default function UpdatePasswordPage() {
             Enregistrer le mot de passe
           </AuthButton>
         </div>
-
       </form>
     </AuthLayout>
   )

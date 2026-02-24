@@ -15,8 +15,6 @@ import {
 }                        from '@/lib/auth.schemas'
 import { authService }   from '@/lib/auth.service'
 
-// ── Page ─────────────────────────────────────────────────────
-
 export default function ForgotPasswordPage() {
   const [serverError, setServerError] = useState<string | null>(null)
   const [sentEmail, setSentEmail]     = useState<string | null>(null)
@@ -24,7 +22,6 @@ export default function ForgotPasswordPage() {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors, isSubmitting },
   } = useForm<ForgotPasswordFormData>({
     resolver: zodResolver(forgotPasswordSchema),
@@ -40,30 +37,26 @@ export default function ForgotPasswordPage() {
     setSentEmail(data.email)
   }
 
-  // ── Success state ────────────────────────────────────────
-
   if (sentEmail) {
     return (
       <AuthLayout
-        title="Email envoye"
+        title="Email envoyé"
         backHref="/login"
-        backLabel="Retour a la connexion"
+        backLabel="Retour à la connexion"
       >
         <div className="space-y-5">
           <AuthAlert
             type="success"
-            message={`Un lien de reinitialisation a ete envoye a ${sentEmail}.`}
+            message={`Un lien de réinitialisation a été envoyé à ${sentEmail}.`}
           />
-
           <div className="border border-slate-800 p-4">
             <p className="text-sm text-slate-400 leading-relaxed">
-              Verifiez votre boite de reception et vos spams. Le lien est valable{' '}
+              Vérifiez votre boîte de réception et vos spams. Le lien est valable{' '}
               <span className="text-slate-200 font-semibold">60 minutes</span>.
             </p>
           </div>
-
           <p className="text-center text-xs text-slate-700">
-            Email non recu ?{' '}
+            Email non reçu ?{' '}
             <button
               type="button"
               onClick={() => { setSentEmail(null); setServerError(null) }}
@@ -77,17 +70,14 @@ export default function ForgotPasswordPage() {
     )
   }
 
-  // ── Form ─────────────────────────────────────────────────
-
   return (
     <AuthLayout
-      title="Mot de passe oublie"
-      subtitle="Entrez votre email pour recevoir un lien de reinitialisation."
+      title="Mot de passe oublié"
+      subtitle="Entrez votre email pour recevoir un lien de réinitialisation."
       backHref="/login"
-      backLabel="Retour a la connexion"
+      backLabel="Retour à la connexion"
     >
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
-
         {serverError && <AuthAlert type="error" message={serverError} />}
 
         <AuthInput
@@ -105,7 +95,6 @@ export default function ForgotPasswordPage() {
             Envoyer le lien
           </AuthButton>
         </div>
-
       </form>
     </AuthLayout>
   )

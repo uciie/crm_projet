@@ -1,7 +1,9 @@
-import { NextResponse }                 from 'next/server'
-import { createServerSupabaseClient }  from '@/lib/supabase/server'
+import { NextResponse }                from 'next/server'
+import { createServerSupabaseClient } from '@/lib/supabase/server'
 
-// Handles the redirect from Supabase after email confirmation or password reset
+// Handles redirects from Supabase after:
+// - Email confirmation (signup)
+// - Password reset link click
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
   const code                     = searchParams.get('code')
@@ -11,10 +13,15 @@ export async function GET(request: Request) {
     const supabase = await createServerSupabaseClient()
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
+      // Password reset: redirect to update-password page
+      const type = searchParams.get('type')
+      if (type === 'recovery') {
+        return NextResponse.redirect(`${origin}/auth/update-password`)
+      }
+      // Email confirmation: redirect to dashboard (or next param)
       return NextResponse.redirect(`${origin}${next}`)
     }
   }
 
-  // Redirect to error page if code is missing or exchange failed
   return NextResponse.redirect(`${origin}/login?error=auth-callback-failed`)
 }

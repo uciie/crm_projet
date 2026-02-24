@@ -18,8 +18,6 @@ import {
 }                        from '@/lib/auth.schemas'
 import { authService }   from '@/lib/auth.service'
 
-// ── Page ─────────────────────────────────────────────────────
-
 export default function LoginPage() {
   const router                        = useRouter()
   const [serverError, setServerError] = useState<string | null>(null)
@@ -46,10 +44,9 @@ export default function LoginPage() {
   return (
     <AuthLayout
       title="Connexion"
-      subtitle="Acces a votre espace de travail CRM."
+      subtitle="Accès à votre espace de travail CRM."
     >
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
-
         {serverError && <AuthAlert type="error" message={serverError} />}
 
         <AuthInput
@@ -71,11 +68,12 @@ export default function LoginPage() {
             error={errors.password?.message}
           />
           <div className="flex justify-end">
+            {/* ✅ CORRECTION : /auth/forgot-password (avec dossier auth/) */}
             <Link
               href="/auth/forgot-password"
               className="text-[11px] text-slate-600 hover:text-blue-400 transition-colors tracking-wide"
             >
-              Mot de passe oublie ?
+              Mot de passe oublié ?
             </Link>
           </div>
         </div>
@@ -92,10 +90,9 @@ export default function LoginPage() {
             href="/register"
             className="text-blue-400 hover:text-blue-300 transition-colors font-medium"
           >
-            Creer un compte
+            Créer un compte
           </Link>
         </p>
-
       </form>
     </AuthLayout>
   )
