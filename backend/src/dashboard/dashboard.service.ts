@@ -10,7 +10,7 @@ export class DashboardService {
     const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1)
 
     // CA total des leads gagnés ce mois
-    const [revenueResult] = await db.execute(sql`
+    const revenueResult = await db.execute(sql`
       SELECT COALESCE(SUM(value), 0) AS revenue
       FROM leads
       WHERE status = 'gagné'
@@ -19,7 +19,7 @@ export class DashboardService {
     `)
 
     // Taux de conversion (leads gagnés / total leads)
-    const [conversionResult] = await db.execute(sql`
+    const conversionResult = await db.execute(sql`
       SELECT
         COUNT(*) FILTER (WHERE status = 'gagné') AS won,
         COUNT(*) AS total
@@ -29,7 +29,7 @@ export class DashboardService {
     `)
 
     // Tâches en retard
-    const [overdueResult] = await db.execute(sql`
+    const overdueResult = await db.execute(sql`
       SELECT COUNT(*) AS overdue
       FROM tasks
       WHERE status NOT IN ('terminée', 'annulée')
@@ -38,7 +38,7 @@ export class DashboardService {
     `)
 
     // Nouveaux contacts ce mois
-    const [newContactsResult] = await db.execute(sql`
+    const newContactsResult = await db.execute(sql`
       SELECT COUNT(*) AS new_contacts
       FROM contacts
       WHERE created_at >= ${startOfMonth}

@@ -36,13 +36,10 @@ interface SupabaseJwtPayload {
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(private readonly config: ConfigService) {
     super({
-      // Extrait le token du header : Authorization: Bearer <token>
       jwtFromRequest:   ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      // Le secret JWT du projet Supabase (Project Settings > API > JWT Secret)
-      secretOrKey:      config.getOrThrow<string>('SUPABASE_JWT_SECRET'),
-      // Algorithme utilisé par Supabase
-      algorithms:       ['HS256'],
+      secretOrKey:      config.getOrThrow<string>('SUPABASE_JWT_PUBLIC_KEY'),
+      algorithms:       ['ES256'], 
     })
   }
 

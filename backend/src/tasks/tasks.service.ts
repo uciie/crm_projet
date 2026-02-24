@@ -192,7 +192,7 @@ export class TasksService {
     const isAdmin = role === 'admin'
     const cond = isAdmin ? undefined : eq(tasks.assigned_to, userId)
 
-    const [stats] = await db.execute(sql`
+    const result = await db.execute(sql`
       SELECT
         COUNT(*) FILTER (WHERE status = 'à_faire')                     AS todo,
         COUNT(*) FILTER (WHERE status = 'en_cours')                    AS in_progress,
@@ -208,7 +208,8 @@ export class TasksService {
       FROM tasks
       ${!isAdmin ? sql`WHERE assigned_to = ${userId}` : sql``}
     `)
-
+    const stats = result.rows[0];
+    
     return {
       todo:        Number((stats as any).todo),
       in_progress: Number((stats as any).in_progress),

@@ -6,6 +6,7 @@ import {
   ForbiddenException,
 } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
+import { Profile } from '../../../frontend/src/types';
 
 // Hiérarchie des rôles : admin > commercial > utilisateur
 const ROLE_HIERARCHY: Record<string, number> = {
@@ -15,6 +16,7 @@ const ROLE_HIERARCHY: Record<string, number> = {
 }
 
 export const ROLES_KEY = 'roles'
+export type AuthUser = Profile;
 
 /**
  * Décorateur @Roles() pour restreindre l'accès à certains rôles.

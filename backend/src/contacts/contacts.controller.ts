@@ -5,7 +5,8 @@ import {
 } from '@nestjs/common'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { RolesGuard, Roles } from '../auth/roles.guard'
-import { ContactsService, ContactFilters } from './contacts.service'
+import { ContactsService } from './contacts.service';
+import type { ContactFilters } from './contacts.service';
 import { CreateContactDto } from './dto/create-contact.dto'
 
 @Controller('contacts')

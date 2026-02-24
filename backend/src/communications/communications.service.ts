@@ -102,7 +102,7 @@ export class CommunicationsService {
   async getStats(userId: string, role: string) {
     const isAdmin = role === 'admin'
 
-    const [stats] = await db.execute(sql`
+    const result = await db.execute(sql`
       SELECT
         COUNT(*)                                                      AS total,
         COUNT(*) FILTER (WHERE type = 'email')                        AS emails,
@@ -112,6 +112,7 @@ export class CommunicationsService {
       FROM communications
       ${!isAdmin ? sql`WHERE created_by = ${userId}` : sql``}
     `)
+    const stats = result.rows[0];
 
     return {
       total:     Number((stats as any).total),

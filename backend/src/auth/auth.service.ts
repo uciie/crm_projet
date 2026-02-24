@@ -30,13 +30,14 @@ export class AuthService {
   private readonly logger = new Logger(AuthService.name)
 
   // Client Supabase Admin (service_role) — uniquement côté serveur
-  private readonly supabaseAdmin = createClient(
-    this.config.getOrThrow('SUPABASE_URL'),
-    this.config.getOrThrow('SUPABASE_SERVICE_ROLE_KEY'),
-    { auth: { autoRefreshToken: false, persistSession: false } }
-  )
+  private supabaseAdmin;
 
-  constructor(private readonly config: ConfigService) {}
+  constructor(private readonly config: ConfigService) {
+    this.supabaseAdmin = createClient(
+      this.config.getOrThrow('SUPABASE_URL'),
+      this.config.getOrThrow('SUPABASE_SERVICE_ROLE_KEY')
+    );
+  }
 
   // ── Récupère le profil complet d'un utilisateur ──────────
 

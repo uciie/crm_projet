@@ -16,11 +16,11 @@ import { RolesGuard }       from './roles.guard'
     // JwtModule utilisé uniquement pour la vérification du token Supabase.
     // La signature réelle est faite par Supabase, pas par NestJS.
     JwtModule.registerAsync({
-      imports: [ConfigModule],
-      inject:  [ConfigService],
+      imports:    [ConfigModule],
+      inject:     [ConfigService],
       useFactory: (config: ConfigService) => ({
-        secret:       config.getOrThrow<string>('SUPABASE_JWT_SECRET'),
-        signOptions:  { expiresIn: '7d' },  // référence, Supabase gère l'expiration
+        publicKey:  config.getOrThrow<string>('SUPABASE_JWT_PUBLIC_KEY'),
+        algorithms: ['ES256'],
       }),
     }),
   ],

@@ -5,7 +5,8 @@ import {
 } from '@nestjs/common'
 import { JwtAuthGuard }  from '../auth/jwt-auth.guard'
 import { RolesGuard, Roles } from '../auth/roles.guard'
-import { TasksService, TaskFilters } from './tasks.service'
+import { TasksService } from './tasks.service'
+import type { TaskFilters } from './tasks.service'
 import { CreateTaskDto } from './dto/create-task.dto'
 import { UpdateTaskDto } from './dto/update-task.dto'
 
