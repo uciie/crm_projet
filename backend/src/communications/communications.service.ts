@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common'
-import { db } from '../database/neon.config'
+import { db } from '../database/db.config'
 import { communications, profiles, contacts, leads } from '../database/schema'
 import { eq, and, or, desc, sql } from 'drizzle-orm'
 import { CreateCommunicationDto } from './dto/create-communication.dto'
@@ -98,7 +98,7 @@ export class CommunicationsService {
     if (comm.created_by !== userId && userRole !== 'admin') {
       throw new ForbiddenException('Accès refusé : vous n\'êtes pas le créateur de cette communication.')
     }
-    
+
     await db.delete(communications).where(eq(communications.id, id))
     return { message: 'Communication supprimée' }
   }

@@ -6,7 +6,7 @@ import { ExtractJwt, Strategy }              from 'passport-jwt'
 import { ConfigService }                     from '@nestjs/config'
 import { eq }                                from 'drizzle-orm'
 
-import { db }       from '../database/neon.config'
+import { db }       from '../database/db.config'
 import { profiles } from '../database/schema'
 
 // Type injecté dans req.user après validation

@@ -11,7 +11,7 @@ import { createClient } from '@supabase/supabase-js'
 import { ConfigService } from '@nestjs/config'
 import { eq }           from 'drizzle-orm'
 
-import { db }       from '../database/neon.config'
+import { db }       from '../database/db.config'
 import { profiles } from '../database/schema'
 
 export class UpdateProfileDto {

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { db } from '../database/neon.config'
+import { db } from '../database/db.config'
 import { leads, contacts, tasks, communications, profiles } from '../database/schema'
 import { eq, and, gte, sql, desc } from 'drizzle-orm'
 

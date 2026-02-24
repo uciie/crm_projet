@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { db } from '../database/neon.config'
+import { db } from '../database/db.config'
 import {
   pipelineDeals, pipelineStages, leads, contacts, companies, profiles
 } from '../database/schema'

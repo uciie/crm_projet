@@ -1,14 +1,11 @@
-// import { defineConfig } from 'drizzle-kit'
-// export default defineConfig({
-//   schema: './src/database/schema.ts',
-//   out: './drizzle',
-//   dialect: 'postgresql',
-//   dbCredentials: {
-//     url: process.env.DATABASE_URL!,
-//   },
-// })
+import type { Config } from 'drizzle-kit'
 
-// Commandes utiles :
-//   npx drizzle-kit generate   → génère le fichier SQL de migration
-//   npx drizzle-kit migrate    → applique la migration sur Neon
-//   npx drizzle-kit studio     → UI de gestion de la DB (localhost:4983)
+export default {
+  schema:    './src/database/schema.ts',
+  out:       './drizzle/migrations',
+  dialect:   'postgresql',
+  dbCredentials: {
+    url: process.env.DATABASE_URL!,
+    ssl: { rejectUnauthorized: false },
+  },
+} satisfies Config

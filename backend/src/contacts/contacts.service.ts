@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common'
-import { db } from '../database/neon.config'
+import { db } from '../database/db.config'
 import { contacts, companies, profiles } from '../database/schema'
 import { eq, or, ilike, and, isNull, desc, sql } from 'drizzle-orm'
 import { CreateContactDto } from './dto/create-contact.dto'

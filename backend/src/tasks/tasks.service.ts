@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common'
-import { db } from '../database/neon.config'
+import { db } from '../database/db.config'
 import { tasks, contacts, leads, companies, profiles } from '../database/schema'
 import { eq, and, or, lt, gte, desc, sql, isNull } from 'drizzle-orm'
 import { CreateTaskDto } from './dto/create-task.dto'
