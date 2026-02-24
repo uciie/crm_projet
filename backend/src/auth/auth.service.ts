@@ -163,11 +163,18 @@ export class AuthService {
     )
 
     if (error) {
-      this.logger.error(`Erreur invitation Supabase : ${error.message}`)
+      // Log technique détaillé UNIQUEMENT en développement
+      if (process.env.NODE_ENV !== 'production') {
+        this.logger.error(`Erreur invitation Supabase : ${error.message}`)
+      } else {
+        // En production : log générique sans détails sensibles
+        this.logger.error(`Échec invitation pour un utilisateur — code: ${error.status ?? 'inconnu'}`)
+      }
+
       if (error.message.includes('already registered')) {
         throw new ConflictException('Cet email est déjà enregistré.')
       }
-      throw new ConflictException(`Erreur lors de l'invitation : ${error.message}`)
+      throw new ConflictException(`Erreur lors de l'invitation.`) // ← message générique vers le client
     }
 
     // Crée le profil en base avec le rôle défini

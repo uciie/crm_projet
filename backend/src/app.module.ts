@@ -1,4 +1,5 @@
-import { Module } from '@nestjs/common';
+import { Module } from '@nestjs/common'
+import { APP_GUARD } from '@nestjs/core'
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler'
 import { ConfigModule }      from '@nestjs/config'
 import { AuthModule }        from './auth/auth.module'
@@ -12,6 +13,7 @@ import { CommunicationsModule } from './communications/communications.module'
 //
 @Module({
   imports: [
+    ThrottlerModule.forRoot([{ ttl: 60000, limit: 20 }]),
     ConfigModule.forRoot({ isGlobal: true }),
     AuthModule,           //← enregistre JwtAuthGuard et RolesGuard globalement
     ContactsModule,
@@ -22,7 +24,12 @@ import { CommunicationsModule } from './communications/communications.module'
     CommunicationsModule,
     //EmailModule,
     //DashboardModule,
-    ThrottlerModule.forRoot([{ ttl: 60000, limit: 20 }])
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard, // OBLIGATOIRE pour activer le rate limiting
+    },
   ],
 })
 export class AppModule {}

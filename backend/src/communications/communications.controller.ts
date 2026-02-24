@@ -40,6 +40,6 @@ export class CommunicationsController {
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   remove(@Param('id', ParseUUIDPipe) id: string, @Request() req: any) {
-    return this.communicationsService.remove(id, req.user.id)
+    return this.communicationsService.remove(id, req.user.id, req.user.role)
   }
 }

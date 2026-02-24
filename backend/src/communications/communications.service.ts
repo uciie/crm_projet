@@ -84,17 +84,21 @@ export class CommunicationsService {
     return comm
   }
 
-  async remove(id: string, userId: string) {
+  async remove(id: string, userId: string, userRole: string) {
     // Seul le créateur ou un admin peut supprimer une communication
     const [comm] = await db
       .select()
       .from(communications)
       .where(eq(communications.id, id))
       .limit(1)
-    if (comm.created_by !== userId && role !== 'admin') 
-      throw new ForbiddenException('Accès refusé : vous n\'êtes pas le créateur de cette communication ou administrateur.')
+    
+    // Vérification d'existence
     if (!comm) throw new NotFoundException('Communication introuvable')
-
+    // vérification des droits d'accès
+    if (comm.created_by !== userId && userRole !== 'admin') {
+      throw new ForbiddenException('Accès refusé : vous n\'êtes pas le créateur de cette communication.')
+    }
+    
     await db.delete(communications).where(eq(communications.id, id))
     return { message: 'Communication supprimée' }
   }

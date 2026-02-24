@@ -14,7 +14,7 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common'
-import { IsEmail, IsString, IsEnum, MaxLength } from 'class-validator'
+import { IsEmail, IsString, IsEnum, MaxLength, IsBoolean } from 'class-validator'
 import { AuthService, UpdateProfileDto, UpdateUserRoleDto } from './auth.service'
 import { JwtAuthGuard, Public }   from './jwt-auth.guard'
 import { RolesGuard, Roles }      from './roles.guard'
@@ -35,6 +35,7 @@ class InviteUserDto {
 
 // DTO pour le changement de statut actif
 class ToggleActiveDto {
+  @IsBoolean()
   is_active: boolean
 }
 
